@@ -27,9 +27,14 @@ def handler(event, context):
     cur = connection.cursor()  
 ## Retrieve Data
     ##STAFF
+    isAdmin=''
+    if event['job'] =='A' or event['job'] =='D':
+        isAdmin = 'Y'
+    else:
+        isAdmin = 'N'
     query = "INSERT INTO Staff(email,password,name,addr,contactNo,job,status,isAdmin,branchId) \
         VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}')"\
-        .format(event['email'], event['password'], event['name'], event['addr'], event['contactNo'], event['job'],'P','N',event['branchId'])
+        .format(event['email'], event['password'], event['name'], event['addr'], event['contactNo'], event['job'],'P',isAdmin,event['branchId'])
     cur.execute(query)
     connection.commit()
     print(cur.rowcount, "record(s) affected")
